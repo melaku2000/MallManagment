@@ -78,6 +78,10 @@ namespace MallManagment.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<BusinessCatagory>> PostBusinessCatagory(BusinessCatagory businessCatagory)
         {
+            var current = DateTime.UtcNow;
+            businessCatagory.CreatedDate = current;
+            businessCatagory.ModifyDate = current;
+
             _context.BusinessCatagories.Add(businessCatagory);
             try
             {

@@ -1,0 +1,18 @@
+﻿@page "/profile"
+@inject IProfileViewModel profileViewModel
+
+<PageTitle>User/Profile</PageTitle>
+<h5>Profile</h5>
+<MudText Typo="Typo.h6">@profileViewModel.Message</MudText>
+<MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" OnClick="profileViewModel.GetProfile">Get</MudButton>
+<MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" OnClick="profileViewModel.OnSubmit">Submit</MudButton>
+@if (profileViewModel.Employee != null)
+{
+    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>profileViewModel.Employee.FullName)" Label="Full name" @bind-Value="profileViewModel.Employee.FullName" />
+    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>profileViewModel.Employee.MobilePhone)" Label="Mobile phone" @bind-Value="profileViewModel.Employee.MobilePhone" />
+    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>profileViewModel.Employee.Occupation)" Label="Occupation" @bind-Value="profileViewModel.Employee.Occupation" />
+}
+@code{
+    protected override async Task OnInitializedAsync() =>await profileViewModel.GetProfile();
+
+} 

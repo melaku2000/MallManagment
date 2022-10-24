@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Server", "MallManagment\Server\MallManagment.Server.csproj", "{06A64189-0FAB-4FAB-BA18-46DB894F6C4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Server", "MallManagment\Server\MallManagment.Server.csproj", "{06A64189-0FAB-4FAB-BA18-46DB894F6C4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Client", "MallManagment\Client\MallManagment.Client.csproj", "{995520F1-9C4B-4D25-AC25-982CF108732D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Client", "MallManagment\Client\MallManagment.Client.csproj", "{995520F1-9C4B-4D25-AC25-982CF108732D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Shared", "MallManagment\Shared\MallManagment.Shared.csproj", "{F689C9A8-F1AB-4F16-B5A7-6DE002DEB9C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Shared", "MallManagment\Shared\MallManagment.Shared.csproj", "{F689C9A8-F1AB-4F16-B5A7-6DE002DEB9C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

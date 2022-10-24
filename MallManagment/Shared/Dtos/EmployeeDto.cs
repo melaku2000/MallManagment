@@ -34,6 +34,28 @@ namespace MallManagment.Shared.Dtos
                 Status = model.Status
             };
         }
+        public static implicit operator Employee(EmployeeDto model)
+        {
+            return new Employee
+            {
+                Id = model.Id,
+                FullName = model.FullName,
+                EmployeeNumber = model.EmployeeNumber,
+                Address = model.Address,
+                IdentificationType = model.IdentificationType,
+                IDNumber = model.IDNumber,
+                MobilePhone = model.MobilePhone,
+                Occupation = model.Occupation,
+                Salary = model.Salary,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                CreatedDate = model.CreatedDate,
+                ModifyDate = model.ModifyDate,
+                IsPermanent = model.IsPermanent,
+                TinNumber = model.TinNumber,
+                Status = model.Status
+            };
+        }
         public int EmployeeNumber { get; set; }
 
         [StringLength(20)]

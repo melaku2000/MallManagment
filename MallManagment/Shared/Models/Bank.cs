@@ -46,8 +46,6 @@ namespace MallManagment.Shared.Models
         public string? OfficePhone { get; set; }
         
         [StringLength(20)]
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Office adress is required")]
         public string? OfficeAddress { get; set; }
 

@@ -1,0 +1,25 @@
+﻿<MudDialog Style="width:500px">
+    <DialogContent>
+        <MudText Typo="Typo.body2" Align="Align.Justify">@ConfirmMessage</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string ConfirmMessage { get; set; } = "Are you sure?";
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<bool>(true));
+    }
+}

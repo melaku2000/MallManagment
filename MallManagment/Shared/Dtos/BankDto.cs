@@ -29,6 +29,23 @@ namespace MallManagment.Shared.Dtos
                 ModifyDate = model.ModifyDate,
             };
         }
+        public static implicit operator Bank(BankDto model)
+        {
+            return new Bank
+            {
+                Id = model.Id,
+                Email = model.Email,
+                AccountNumber = model.AccountNumber,
+                BankName = model.BankName,
+                BranchName = model.BranchName,
+                ContactPerson = model.ContactPerson,
+                ContactMobilePerson = model.ContactMobilePerson,
+                OfficePhone = model.OfficePhone,
+                OfficeAddress = model.OfficeAddress,
+                CreatedDate = model.CreatedDate,
+                ModifyDate = model.ModifyDate, 
+            };
+        }
         [StringLength(50)]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
@@ -64,8 +81,6 @@ namespace MallManagment.Shared.Dtos
         public string? OfficePhone { get; set; }
 
         [StringLength(20)]
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
         [Required(ErrorMessage = "Office adress is required")]
         public string? OfficeAddress { get; set; }
     }
