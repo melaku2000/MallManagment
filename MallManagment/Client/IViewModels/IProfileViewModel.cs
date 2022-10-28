@@ -1,6 +1,6 @@
 ﻿using MallManagment.Shared.Dtos;
 
-namespace MallManagment.Client.ViewModels
+namespace MallManagment.Client.IViewModels
 {
     public interface IProfileViewModel
     {

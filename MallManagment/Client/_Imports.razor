@@ -9,10 +9,12 @@
 @using MallManagment.Client
 @using MallManagment.Client.Shared
 @using MallManagment.Client.ViewModels
+@using MallManagment.Client.IViewModels
 
 @using MallManagment.Shared.Dtos
+@using MallManagment.Shared.Enums
 @using MallManagment.Client.Services
-
+@using MallManagment.Shared.Extenssions
 
 @using MudBlazor
 @*For Authorization on page*@
@@ -20,3 +22,4 @@
 @using Microsoft.AspNetCore.Authorization
 
 @inject IDialogService _dialogService
+@inject NavigationManager navManager

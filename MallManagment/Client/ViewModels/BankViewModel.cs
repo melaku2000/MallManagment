@@ -1,4 +1,5 @@
 ﻿using MallManagment.Client.Components;
+using MallManagment.Client.IViewModels;
 using MallManagment.Client.Pages.Admin;
 using MallManagment.Client.Services;
 using MallManagment.Shared.Dtos;

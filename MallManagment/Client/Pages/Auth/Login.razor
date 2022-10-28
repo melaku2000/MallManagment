@@ -1,0 +1,28 @@
+﻿@page "/auth/login"
+
+@inject ILoginViewModel loginViewModel
+
+<div style="min-width:500px;max-width:650px;">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>Log in</CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <EditForm Model="@loginViewModel.loginDto" OnValidSubmit="@(()=>loginViewModel.OnSubmitAsync())">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                @if (loginViewModel.ShowAuthError)
+                {
+                    <MudAlert AlertTextPosition="AlertTextPosition.Center" CloseIconClicked="loginViewModel.CloseError" Severity="Severity.Error">
+                        <p>@loginViewModel.Error</p>
+                    </MudAlert>
+                }
+                <MudTextField Variant="Variant.Outlined" @bind-Value="loginViewModel.loginDto.Email" Label="Enter email" For="@(()=>loginViewModel.loginDto.Email)" />
+                <MudTextField Variant="Variant.Outlined" InputType="InputType.Password" @bind-Value="loginViewModel.loginDto.Password" Label="Enter password" For="@(()=>loginViewModel.loginDto.Password)" />
+                <div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Submit</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" Link="auth/register">Register</MudButton>
+                </div>
+            </EditForm>
+        </MudCardContent>
+    </MudCard>
+</div>

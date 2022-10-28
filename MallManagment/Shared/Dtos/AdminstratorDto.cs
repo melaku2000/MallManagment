@@ -32,8 +32,26 @@ namespace MallManagment.Shared.Dtos
             {
                 dto.FullName=model.Employee.FullName;
                 dto.IDNumber=model.Employee.IDNumber;
+                dto.Occupation=model.Employee.Occupation;
+                dto.MobilePhone=model.Employee.MobilePhone;
             }
             return dto;
+        }
+        public static implicit operator Adminstrator(AdminstratorDto model)
+        {
+            return new Adminstrator
+            {
+                EmployeeId = model.EmployeeId,
+                Email = model.Email,
+                EmailConfirmed = model.EmailConfirmed,
+                LastLoginTime = model.LastLoginTime,
+                CreatedDate = model.CreatedDate,
+                ModifyDate = model.ModifyDate,
+                LockCount = model.LockCount,
+                PhoneConfirmed = model.PhoneConfirmed,
+                Status = model.Status, 
+                Role = model.Role  
+            };
         }
         [Required]
         public string? EmployeeId { get; set; }
@@ -41,13 +59,13 @@ namespace MallManagment.Shared.Dtos
         [StringLength(50)]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage ="Email field is required")]
         public string? Email { get; set; }
 
         public bool EmailConfirmed { get; set; }
         public bool PhoneConfirmed { get; set; }
         public int LockCount { get; set; }
-        public byte[]? PasswordSalt { get; set; }
-        public byte[]? PasswordHash { get; set; }
+        public string? Password { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime LastLoginTime { get; set; }
@@ -68,6 +86,8 @@ namespace MallManagment.Shared.Dtos
         public string? IDNumber { get; set; }
 
         public string? FullName { get; set; }
+        public string? Occupation { get; set; }
+        public string? MobilePhone { get; set; }
 
     }
 }

@@ -1,12 +1,16 @@
 using MallManagment.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
-//    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
 
 builder.Services.AddDbContext<AppDbContext>();
 
@@ -29,8 +33,18 @@ else
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseBlazorFrameworkFiles();
+
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(),"StaticFiles")),
+    RequestPath = new PathString("/StaticFiles")
+}); 
 
 app.UseRouting();
 

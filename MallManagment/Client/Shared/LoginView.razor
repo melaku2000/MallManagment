@@ -1,5 +1,17 @@
-﻿<h3>LoginView</h3>
+﻿@inject HttpClient _httpClient
 
-@code {
 
+<AuthorizeView>
+    <Authorized>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="LogoutAsync">Log out</MudButton>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Link="auth/login">Log in</MudButton>
+    </NotAuthorized>
+</AuthorizeView>
+@code{
+    async Task LogoutAsync(){
+        await _httpClient.GetAsync("api/account/logout");
+        navManager.NavigateTo("/",true);             
+    }
 }

@@ -1,0 +1,45 @@
+﻿@page "/admin/employees"
+@inject IEmployeeViewModel employeeViewModel
+
+
+<PageTitle>Admin/Employees</PageTitle>
+<h3>Employees</h3>
+
+<MudTable Items="employeeViewModel.Employees" Hover="true" @bind-education="employeeViewModel.EmployeeDto">
+    <HeaderContent>
+        <MudTh>Employee number</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Phone </MudTh>
+        <MudTh>Occupation</MudTh>
+        <MudTh>Start date</MudTh>
+        <MudTh>Permanent</MudTh>
+        <MudTh>Status</MudTh>
+        <MudTh>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium"
+                    Href="admin/create/employees">Add</MudButton>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="EmployeeNumber">@context.EmployeeNumber</MudTd>
+        <MudTd DataLabel="FullName">@context.FullName</MudTd>
+        <MudTd DataLabel="MobilePhone">@context.MobilePhone</MudTd>
+        <MudTd DataLabel="Occupation">@context.Occupation</MudTd>
+        <MudTd DataLabel="StartDate">@context.StartDate</MudTd>
+        <MudTd DataLabel="IsPermanent">@context.IsPermanent</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd>
+            <MudButtonGroup Variant="Variant.Filled" OverrideStyles="false">
+                <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                               Href="@($"/admin/edit/employees/{context.Id}")" >Edit</MudButton>
+                <MudButton Color="Color.Success" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Details" Size="Size.Medium" Class="ma-2"
+                           Href="@($"/admin/employee/detail/{context.Id}")">Detail</MudButton>
+                <MudButton Color="Color.Warning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                    @onclick="(e => employeeViewModel.DeleteAsync(context))" >Delete</MudButton>
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    protected override async Task OnInitializedAsync() => await employeeViewModel.LoadAsync();
+}

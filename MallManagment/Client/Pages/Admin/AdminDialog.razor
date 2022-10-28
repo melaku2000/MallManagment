@@ -1,0 +1,61 @@
+﻿<EditForm Model="admin" OnValidSubmit="Submit" style="width:500px;overflow-y:scroll">
+    <DataAnnotationsValidator />
+    <MudDialog>
+        <DialogContent>
+            @if (!string.IsNullOrEmpty(admin.FullName))
+            {
+                <MudTextField T="string" ReadOnly Variant="Variant.Outlined" For="@(()=>admin.FullName)" Label="admin name" @bind-Value="admin.FullName" />
+                <MudTextField T="string" ReadOnly Variant="Variant.Outlined" For="@(()=>admin.MobilePhone)" Label="Mobile phone" @bind-Value="admin.MobilePhone" />
+            }
+            else
+            {
+                <MudSelect Variant="Variant.Outlined" Strict @bind-Value="admin.EmployeeId" Label="Employee" For="@(()=>admin.EmployeeId)">
+                    @if(employees!=null){
+                        @foreach (EmployeeDto employee in employees)
+                        {
+                            <MudSelectItem Value=@employee.Id>@employee.FullName</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            }
+            <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>admin.Email)" Label="Email" @bind-Value="admin.Email" />
+
+            <MudSelect Variant="Variant.Outlined" Strict @bind-Value="admin.Role" Label="Role" For="@(()=>admin.Role)">
+                @foreach (RoleType role in Enum.GetValues(typeof(RoleType)))
+                {
+                    <MudSelectItem Value=@role>@role.GetStringValue()</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect Variant="Variant.Outlined" Strict @bind-Value="admin.Status" Label="Status" For="@(()=>admin.Status)">
+                @foreach (UserStatus status in Enum.GetValues(typeof(UserStatus)))
+                {
+                    <MudSelectItem Value=@status>@status</MudSelectItem>
+                }
+            </MudSelect>
+            <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>admin.Password)" Label="Password" @bind-Value="admin.Password" />
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public AdminstratorDto admin { get; set; } = new AdminstratorDto();
+    [Parameter]
+    public List<EmployeeDto> employees { get; set; } = new List<EmployeeDto>();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<AdminstratorDto>(admin));
+    }
+}

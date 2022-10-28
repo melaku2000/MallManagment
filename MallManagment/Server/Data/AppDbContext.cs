@@ -45,6 +45,7 @@ namespace MallManagment.Server.Data
         }
         public DbSet<Employee> Employees { get; set; } = null!;
         public DbSet<Adminstrator> Adminstrators { get; set; } = null!;
+        public DbSet<UserToken> UserTokens { get; set; } = null!;
         public DbSet<BusinessCatagory> BusinessCatagories { get; set; } = null!;
         public DbSet<Bank> Banks { get; set; } = null!;
         public DbSet<BankReading> BankReadings { get; set; } = null!;

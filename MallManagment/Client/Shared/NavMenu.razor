@@ -2,12 +2,34 @@
     <MudNavLink Href="/" Icon="@Icons.Material.Outlined.Home">
         Home
     </MudNavLink>
-    <MudNavLink Href="/profile" Icon="@Icons.Material.Outlined.Person">
-        Profile
-    </MudNavLink>
-    <MudNavLink Href="/admin/banks" Icon="@Icons.Material.Outlined.ViewKanban">
-        Banks
-    </MudNavLink>
+    <AuthorizeView>
+        <Authorized>
+            <MudNavLink Href="/profile" Icon="@Icons.Material.Outlined.Person">
+                Profile
+            </MudNavLink>
+        </Authorized>
+    </AuthorizeView>
+  <AuthorizeView Roles="@RoleType.SuperAdmin.ToString()">
+      <Authorized>
+            <MudNavLink Href="/admin/banks" Icon="@Icons.Material.Outlined.ViewKanban">
+                Banks
+            </MudNavLink>
+            <MudNavLink Href="/admin/employees" Icon="@Icons.Material.Outlined.PanTool">
+                Employees
+            </MudNavLink>
+            <MudNavLink Href="/admins" Icon="@Icons.Material.Outlined.PersonPin">
+                Admins
+            </MudNavLink>
+      </Authorized>
+  </AuthorizeView>
+  <AuthorizeView Roles="@RoleType.Finance.ToString()">
+      <Authorized>
+            <MudNavLink Href="/admin/employees" Icon="@Icons.Material.Outlined.PanTool">
+                Employees
+            </MudNavLink>
+      </Authorized>
+  </AuthorizeView>
+    
     <MudNavLink Href="#" Icon="@Icons.Material.Outlined.Newspaper">
         NEWS
     </MudNavLink>

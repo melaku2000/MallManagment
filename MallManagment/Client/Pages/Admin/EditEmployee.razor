@@ -1,0 +1,63 @@
+﻿@page "/admin/edit/employees/{employeeId}"
+@page "/admin/create/employees"
+
+@inject IEditEmployeeViewModel employeeViewModel
+
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>Employee</CardHeaderContent>
+        </MudCardHeader>
+    @if(employeeViewModel.EmployeeDto != null)
+    {
+        <MudCardContent>
+            <EditForm Model="@employeeViewModel.EmployeeDto" OnValidSubmit="@(()=>employeeViewModel.OnSubmitAsync())">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <ValidationSummary/>
+                @if (employeeViewModel.ShowAuthError)
+                {
+                    <MudAlert AlertTextPosition="AlertTextPosition.Center" CloseIconClicked="employeeViewModel.CloseError" Severity="Severity.Error">
+                        <p>@employeeViewModel.Error</p>
+                    </MudAlert>
+                }
+                <MudTextField T="int" Variant="Variant.Outlined" ReadOnly For="@(()=>employeeViewModel.EmployeeDto.EmployeeNumber)" Label="Employee number" @bind-Value="employeeViewModel.EmployeeDto.EmployeeNumber" />
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.FullName)" Label="Full name" @bind-Value="employeeViewModel.EmployeeDto.FullName" />
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.MobilePhone)" Label="Mobile phone" @bind-Value="employeeViewModel.EmployeeDto.MobilePhone" />
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.TinNumber)" Label="Tin number" @bind-Value="employeeViewModel.EmployeeDto.TinNumber" />
+                <MudSelect Variant="Variant.Outlined" Strict @bind-Value="employeeViewModel.EmployeeDto.IdentificationType" Label="ID type" For="@(()=>employeeViewModel.EmployeeDto.IdentificationType)">
+                    @foreach (IdentificationType idtype in Enum.GetValues(typeof(IdentificationType)))
+                    {
+                        <MudSelectItem Value=@idtype>@idtype</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.IDNumber)" Label="ID number" @bind-Value="employeeViewModel.EmployeeDto.IDNumber" />
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.Address)" Label="Address" @bind-Value="employeeViewModel.EmployeeDto.Address" />
+                <MudDivider />
+
+                <MudCheckBox Label="Is Permanent" @bind-Checked="employeeViewModel.EmployeeDto.IsPermanent" />
+
+                <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.Occupation)" Label="Occupation" @bind-Value="employeeViewModel.EmployeeDto.Occupation" />
+                <MudTextField T="decimal" Variant="Variant.Outlined" For="@(()=>employeeViewModel.EmployeeDto.Salary)" Label="Salary" @bind-Value="employeeViewModel.EmployeeDto.Salary" />
+                    <MudSelect Variant="Variant.Outlined" Strict @bind-Value="employeeViewModel.EmployeeDto.Status" Label="Status" For="@(()=>employeeViewModel.EmployeeDto.Status)">
+                    @foreach (UserStatus status in Enum.GetValues(typeof(UserStatus)))
+                    {
+                        <MudSelectItem Value=@status>@status</MudSelectItem>
+                    }
+                </MudSelect>
+                <div>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Submit</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" Link="admin/employees">Cancel</MudButton>
+                </div>
+            </EditForm>
+        </MudCardContent>
+     }
+    </MudCard>
+
+
+@code {
+    [Parameter]
+    public string? EmployeeId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await employeeViewModel.LoadAsync(EmployeeId!);
+    }
+}

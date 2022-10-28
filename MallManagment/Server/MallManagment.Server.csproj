@@ -27,9 +27,5 @@
     <ProjectReference Include="..\Shared\MallManagment.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="StaticFiles\" />
-  </ItemGroup>
-
 
 </Project>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,9 +17,9 @@ namespace MallManagment.Shared.Dtos
         {
             var dto= new AuthDto
             {
-                Id = user.EmployeeId,
+                EmployeeId = user.EmployeeId,
                 Email = user.Email, LockCount = user.LockCount, LastLoginTime = user.LastLoginTime,
-                 Role = user.Role, 
+                 StringRole = user.Role.ToString(), 
                 EmailConfirmed = user.EmailConfirmed,
                 PhoneConfirmed = user.PhoneConfirmed,  
             };
@@ -29,7 +30,7 @@ namespace MallManagment.Shared.Dtos
             }
             return dto;
         }
-        public string? Id { get; set; }
+        public string? EmployeeId { get; set; }
         public int EmployeeNumber { get; set; }
         public string? Email { get; set; }
         public string? FullName { get; set; }
@@ -43,7 +44,7 @@ namespace MallManagment.Shared.Dtos
         public string? RefreshToken { get; set; }
         public DateTime TokenExpireTime { get; set; }
        
-        public RoleType Role { get; set; }
+        public string? StringRole { get; set; }
     }
     public class LoginDto
     {
@@ -51,5 +52,29 @@ namespace MallManagment.Shared.Dtos
         public string? Email { get; set; }
         [Required(ErrorMessage = "Password is required.")]
         public string? Password { get; set; }
+    }
+    public class ConfirmDto
+    {
+        [Required]
+        public string? EmployeeId { get; set; }
+        [Required(ErrorMessage = "Token is required.")]
+        public string? Token { get; set; }
+    }
+    public class ConfirmPasswordDto
+    {
+        public static implicit operator ConfirmPasswordDto(UserToken userToken)
+        {
+            return new ConfirmPasswordDto { EmployeeId = userToken.EmployeeId, Token = userToken.Token };
+        }
+        [Required]
+        public string? EmployeeId { get; set; }
+        [Required(ErrorMessage = "Token is required.")]
+        public string? Token { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        public string? Password { get; set; }
+
+        [Compare(nameof(Password),ErrorMessage = "Password and Confirm password do not match.")]
+        public string? ConfirmPassword { get; set; }
     }
 }

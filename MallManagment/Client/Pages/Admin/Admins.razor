@@ -1,0 +1,43 @@
+﻿@page "/admins"
+@inject IAdminsViewModel adminViewModel
+
+
+<PageTitle>Admins</PageTitle>
+<h3>Admins</h3>
+
+<MudTable Items="adminViewModel.Admins" Hover="true" @bind-education="adminViewModel.AdminDto">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Phone </MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Occupation</MudTh>
+        <MudTh>Last active</MudTh>
+        <MudTh>Role</MudTh>
+        <MudTh>Status</MudTh>
+        <MudTh>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium"
+                       OnClick="adminViewModel.CreateAsync">Add</MudButton>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="FullName">@context.FullName</MudTd>
+        <MudTd DataLabel="MobilePhone">@context.MobilePhone</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Occupation">@context.Occupation</MudTd>
+        <MudTd DataLabel="LastLoginTime">@context.LastLoginTime</MudTd>
+        <MudTd DataLabel="Role">@context.Role.GetStringValue()</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd>
+            <MudButtonGroup Variant="Variant.Filled" OverrideStyles="false">
+                <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                           OnClick="(()=>adminViewModel.UpdateAsync(context))">Edit</MudButton>
+                <MudButton Color="Color.Warning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                           @onclick="(e => adminViewModel.DeleteAsync(context))">Delete</MudButton>
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    protected override async Task OnInitializedAsync() => await adminViewModel.LoadAsync();
+}

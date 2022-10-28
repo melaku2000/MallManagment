@@ -1,4 +1,5 @@
-﻿using MallManagment.Client.Services;
+﻿using MallManagment.Client.IViewModels;
+using MallManagment.Client.Services;
 using MallManagment.Shared.Dtos;
 
 namespace MallManagment.Client.ViewModels
