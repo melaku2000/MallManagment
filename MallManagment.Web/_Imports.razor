@@ -1,0 +1,27 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.JSInterop
+@using MallManagment.Web
+@using MallManagment.Web.Shared
+
+
+@using MallManagment.Web.ViewModels
+@using MallManagment.Web.IViewModels
+
+@using MallManagment.Models.Dtos
+@using MallManagment.Models.Enums
+@using MallManagment.Web.Services
+@using MallManagment.Models.Extenssions
+
+@using MudBlazor
+@*For Authorization on page*@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+
+@inject IDialogService _dialogService
+@inject NavigationManager navManager

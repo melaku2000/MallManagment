@@ -1,0 +1,33 @@
+﻿<MudDialog Style="width:500px">
+    <DialogContent>
+
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.BankName)" Label="Bank name" @bind-Value="bank.BankName" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.BranchName)" Label="Branch name" @bind-Value="bank.BranchName" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.OfficePhone)" Label="Office phone" @bind-Value="bank.OfficePhone" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.OfficeAddress)" Label="Location" @bind-Value="bank.OfficeAddress" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.ContactPerson)" Label="Contact person" @bind-Value="bank.ContactPerson" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.ContactMobilePerson)" Label="Contact Mobile number" @bind-Value="bank.ContactMobilePerson" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.AccountNumber)" Label="Account number" @bind-Value="bank.AccountNumber" />
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>bank.Email)" Label="Email address" @bind-Value="bank.Email" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public BankDto bank { get; set; } = new BankDto();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<BankDto>(bank));
+    }
+}
