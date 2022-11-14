@@ -46,6 +46,6 @@ namespace MallManagment.Models.Entities
         public DateTime TokenExpireTime { get; set; }
         // NAVIGATION
         public virtual Employee Employee { get; set; } = null!;
-
+        public virtual ICollection<UserToken> Tokens { get; set; } = null!;
     }
 }

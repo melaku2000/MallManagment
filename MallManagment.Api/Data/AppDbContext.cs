@@ -40,11 +40,11 @@ namespace MallManagment.Api.Data
         public DbSet<UserToken> UserTokens { get; set; } = null!;
         public DbSet<BusinessCatagory> BusinessCatagories { get; set; } = null!;
         public DbSet<Bank> Banks { get; set; } = null!;
-        public DbSet<BankReading> BankReadings { get; set; } = null!;
+        public DbSet<Balance> Balances { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
-       
-        //public DbSet<Approval> Approvals { get; set; } = null!;
-        //public DbSet<Message> Messages { get; set; } = null!;
+
+        public DbSet<Room> Rooms { get; set; } = null!; 
+        public DbSet<Message> Messages { get; set; } = null!;
         //public DbSet<RentalMessage> RentalMessages { get; set; } = null!;
 
     }

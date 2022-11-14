@@ -1,0 +1,68 @@
+﻿<EditForm Model="customer" OnValidSubmit="Submit" style="width:500px;overflow-y:scroll">
+    <DataAnnotationsValidator />
+    <MudDialog>
+        <DialogContent>
+            <MudGrid>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.FullName)" Label="Contact person name" @bind-Value="customer.FullName" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.MobilePhone)" Label="Mobile phone" @bind-Value="customer.MobilePhone" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.Email)" Label="Email" @bind-Value="customer.Email" />
+                </MudItem>
+
+                <MudDivider />
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.CompanyName)" Label="Company name" @bind-Value="customer.CompanyName" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.OfficePhone)" Label="Office phone" @bind-Value="customer.OfficePhone" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.CompanyTin)" Label="Company Tin" @bind-Value="customer.CompanyTin" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>customer.CompanyUrl)" Label="Web address" @bind-Value="customer.CompanyUrl" />
+                </MudItem>
+                <MudItem md="6">
+                    <MudSelect T="string" Variant="Variant.Outlined" Strict @bind-Value="customer.CatagoryId" Label="Catagory" For="@(()=>customer.CatagoryId)">
+                        @if (catagories != null)
+                        {
+                            @foreach (CatagoryDto catagory in catagories)
+                            {
+                                <MudSelectItem Value="@catagory.Id">@catagory.CatagoryName</MudSelectItem>
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public CustomerDto customer { get; set; } = new CustomerDto();
+    [Parameter]
+    public List<CatagoryDto> catagories { get; set; } = new List<CatagoryDto>();
+
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<CustomerDto>(customer));
+    }
+}

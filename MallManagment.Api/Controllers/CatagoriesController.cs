@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MallManagment.Api.Data;
 using MallManagment.Models.Entities;
+using MallManagment.Models.Dtos;
+using MallManagment.Models.Enums;
 
 namespace MallManagment.Api.Controllers
 {
@@ -22,100 +24,103 @@ namespace MallManagment.Api.Controllers
         }
 
         // GET: api/Catagories
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BusinessCatagory>>> GetBusinessCatagories()
+        [HttpGet("list")]
+        public async Task<IActionResult> GetList()
         {
-            return await _context.BusinessCatagories.ToListAsync();
+            var catagories = await _context.BusinessCatagories
+                 .Select(a => (CatagoryDto)a).ToListAsync();
+            return Ok(new ResponseDto<List<CatagoryDto>> { Model = catagories, Status = ResponseStatus.Success });
         }
 
         // GET: api/Catagories/5
+        // GET: api/Catagories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BusinessCatagory>> GetBusinessCatagory(string id)
+        public async Task<IActionResult> GetBusinessCatagory(string id)
         {
-            var businessCatagory = await _context.BusinessCatagories.FindAsync(id);
+            var catagory = await _context.BusinessCatagories.FindAsync(id);
 
-            if (businessCatagory == null)
+            if (catagory == null)
             {
-                return NotFound();
+                return Ok(new ResponseDto<CatagoryDto> { Status = ResponseStatus.NotFound });
             }
 
-            return businessCatagory;
+            return Ok(new ResponseDto<CatagoryDto> { Model = catagory, Status = ResponseStatus.Success });
         }
 
         // PUT: api/Catagories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBusinessCatagory(string id, BusinessCatagory businessCatagory)
+        public async Task<IActionResult> PutBusinessCatagory(string id, [FromBody] CatagoryDto businessCatagory)
         {
             if (id != businessCatagory.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(businessCatagory).State = EntityState.Modified;
+            BusinessCatagory catagory = businessCatagory;
+            catagory.ModifyDate = DateTime.UtcNow;
+            _context.Entry(catagory).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!BusinessCatagoryExists(id))
                 {
-                    return NotFound();
+                    return Ok(new ResponseDto<CatagoryDto> { Model = catagory, Status = ResponseStatus.NotFound });
                 }
                 else
                 {
-                    throw;
+                    return Ok(new ResponseDto<CatagoryDto> { Model = catagory, Status = ResponseStatus.Error, Message = ex.Message });
                 }
             }
 
-            return NoContent();
+            return Ok(new ResponseDto<CatagoryDto> { Model = catagory, Status = ResponseStatus.Success });
         }
 
         // POST: api/Catagories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BusinessCatagory>> PostBusinessCatagory(BusinessCatagory businessCatagory)
+        public async Task<IActionResult> Post([FromBody] CatagoryDto dto)
         {
             var current = DateTime.UtcNow;
-            businessCatagory.CreatedDate = current;
-            businessCatagory.ModifyDate = current;
-
-            _context.BusinessCatagories.Add(businessCatagory);
+            dto.Id = Guid.NewGuid().ToString();
+            dto.CreatedDate = current;
+            dto.ModifyDate = current;
+            _context.BusinessCatagories.Add(dto);
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                if (BusinessCatagoryExists(businessCatagory.Id))
+                if (BusinessCatagoryExists(dto.Id))
                 {
-                    return Conflict();
+                    return Ok(new ResponseDto<CatagoryDto> { Model = dto, Status = ResponseStatus.Error, Message = "Its already exists" });
                 }
                 else
                 {
-                    throw;
+                    return Ok(new ResponseDto<CatagoryDto> { Model = dto, Status = ResponseStatus.Error, Message = ex.Message });
                 }
             }
 
-            return CreatedAtAction("GetBusinessCatagory", new { id = businessCatagory.Id }, businessCatagory);
+            return Ok(new ResponseDto<CatagoryDto> { Model = dto, Status = ResponseStatus.Success });
         }
-
         // DELETE: api/Catagories/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBusinessCatagory(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var businessCatagory = await _context.BusinessCatagories.FindAsync(id);
-            if (businessCatagory == null)
+            var catagory = await _context.BusinessCatagories.FindAsync(id);
+            if (catagory == null)
             {
-                return NotFound();
+                return Ok(new ResponseDto<CatagoryDto> { Status = ResponseStatus.NotFound });
             }
 
-            _context.BusinessCatagories.Remove(businessCatagory);
+            _context.BusinessCatagories.Remove(catagory);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new ResponseDto<CatagoryDto> { Model = catagory, Status = ResponseStatus.Success });
         }
 
         private bool BusinessCatagoryExists(string id)

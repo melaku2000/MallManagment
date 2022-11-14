@@ -43,5 +43,10 @@ builder.Services.AddHttpClient<IEmployeeDetailViewModel, EmployeeDetailViewModel
 
 builder.Services.AddHttpClient<IAdminsViewModel, AdminsViewModel>("MallMgmt", cliient => cliient.BaseAddress = new Uri("https://localhost:7245/"));
 
+builder.Services.AddHttpClient<ICustomerViewModel, CustomerViewModel>("MallMgmt", cliient => cliient.BaseAddress = new Uri("https://localhost:7245/"));
+builder.Services.AddHttpClient<ICatagoryViewModel, CatagoryViewModel>("MallMgmt", cliient => cliient.BaseAddress = new Uri("https://localhost:7245/"));
+builder.Services.AddHttpClient<IBalanceViewModel, BalanceViewModel>("MallMgmt", cliient => cliient.BaseAddress = new Uri("https://localhost:7245/"));
+
+builder.Services.AddHttpClient<IRoomViewModel, RoomViewModel>("MallMgmt", cliient => cliient.BaseAddress = new Uri("https://localhost:7245/"));
 
 await builder.Build().RunAsync();

@@ -1,0 +1,28 @@
+﻿<EditForm Model="catagory" OnValidSubmit="Submit">
+    <DataAnnotationsValidator ></DataAnnotationsValidator>
+<MudDialog Style="width:500px">
+    <DialogContent>
+        <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>catagory.CatagoryName)" Label="Catagory name" @bind-Value="catagory.CatagoryName" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+</EditForm>
+@code{
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public CatagoryDto catagory { get; set; } = new CatagoryDto();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<CatagoryDto>(catagory));
+    }
+}

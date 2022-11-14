@@ -1,0 +1,31 @@
+﻿<EditForm Model="balance" OnValidSubmit="Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary />
+    <MudDialog Style="width:500px">
+        <DialogContent>
+            <MudTextField ReadOnly T="string" Variant="Variant.Outlined" For="@(()=>balance.BankName)" Label="Catagory name" @bind-Value="balance.BankName" />
+            <MudTextField T="decimal" Variant="Variant.Outlined" For="@(()=>balance.AccountBalance)" Label="Account balance" @bind-Value="balance.AccountBalance" />
+            <MudTextField T="string" Lines="3" Variant="Variant.Outlined" For="@(()=>balance.Note)" Label="Note" @bind-Value="balance.Note" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public BalanceDto balance { get; set; } = new BalanceDto();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<BalanceDto>(balance));
+    }
+}

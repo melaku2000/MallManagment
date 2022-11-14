@@ -82,7 +82,7 @@ namespace MallManagment.Api.Controllers
         [HttpPost("emailconfirm")]
         public async Task<IActionResult> EmailConfirmation([FromBody] ConfirmDto confirmDto)
         {
-            var userToken=await _context.UserTokens.Where(a=>a.EmployeeId== confirmDto.EmployeeId && a.TokenType==TokenType.EmailConfirmation).FirstOrDefaultAsync();
+            var userToken=await _context.UserTokens.Where(a=>a.AdminId == confirmDto.EmployeeId && a.TokenType==TokenType.EmailConfirmation).FirstOrDefaultAsync();
             if(userToken==null)
                 return Ok(new ResponseDto<ConfirmPasswordDto>() { Status=ResponseStatus.NotFound});
 
@@ -115,7 +115,7 @@ namespace MallManagment.Api.Controllers
         [HttpPost("setpassword")]
         public async Task<IActionResult> SetPassword([FromBody] ConfirmPasswordDto confirmDto)
         {
-            var userToken = await _context.UserTokens.Where(a => a.EmployeeId == confirmDto.EmployeeId && a.TokenType == TokenType.EmailConfirmation).FirstOrDefaultAsync();
+            var userToken = await _context.UserTokens.Where(a => a.AdminId == confirmDto.AdminId && a.TokenType == TokenType.EmailConfirmation).FirstOrDefaultAsync();
             if (userToken == null)
                 return Ok(new ResponseDto<ConfirmPasswordDto>() { Status = ResponseStatus.NotFound });
 
@@ -126,7 +126,7 @@ namespace MallManagment.Api.Controllers
             if (userToken.TokenExpireTime < DateTime.UtcNow)
                 return Ok(new ResponseDto<ConfirmPasswordDto>() { Model = userToken, Status = ResponseStatus.Error, Message = $"This token is expired {(DateTime.UtcNow.Subtract(userToken.TokenExpireTime)).Hours} hours ago" });
 
-            var admin = await _context.Adminstrators.FirstOrDefaultAsync(a => a.EmployeeId == confirmDto.EmployeeId);
+            var admin = await _context.Adminstrators.FirstOrDefaultAsync(a => a.EmployeeId == confirmDto.AdminId);
             if (admin != null)
             {
                 PasswordHasher.GeneratePasswordHasing(confirmDto.Password!, out byte[] salt, out byte[] hash);

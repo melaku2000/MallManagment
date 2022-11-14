@@ -1,0 +1,35 @@
+﻿@page "/employee/rooms"
+@inject IRoomViewModel roomViewModel
+
+<PageTitle>Office/Rooms</PageTitle>
+<h3>Office rooms</h3>
+<MudTable Items="roomViewModel.Rooms" Dense Hover="true" @bind-education="roomViewModel.RoomDto">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Area M<sup>2</sup></MudTh>
+        <MudTh>Price per M<sup>2</sup></MudTh>
+        <MudTh>Status</MudTh>
+        <MudTh>
+            <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" Class="ma-2"
+                    @onclick="(e => roomViewModel.CreateAsync())" />
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="RoomName">@context.RoomName</MudTd>
+        <MudTd DataLabel="Area">@context.Area</MudTd>
+        <MudTd DataLabel="Amount">@context.Amount</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd>
+            <MudButtonGroup>
+                <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                               @onclick="(e => roomViewModel.UpdateAsync(context))" />
+                <MudIconButton Color="Color.Warning" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                               @onclick="(e => roomViewModel.DeleteAsync(context))" />
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+@code {
+    protected override async Task OnInitializedAsync() => await roomViewModel.LoadAsync();
+
+}

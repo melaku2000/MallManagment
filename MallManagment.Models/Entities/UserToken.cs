@@ -10,12 +10,12 @@ namespace MallManagment.Models.Entities
 {
     public class UserToken :BaseModel
     {
-        [ForeignKey("Employee")]
-        public string? EmployeeId { get; set; }
+        [ForeignKey(nameof(Admin))]
+        public string? AdminId { get; set; }
         public string? Token { get; set; }
         public TokenType TokenType { get; set; }
         public DateTime TokenExpireTime { get; set; }
         // NAVIGATION
-        public virtual Employee Employee { get; set; } = null!;
+        public virtual Adminstrator Admin{ get; set; } = null!;
     }
 }

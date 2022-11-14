@@ -31,6 +31,8 @@ namespace MallManagment.Models.Entities
         public bool IsPermanent { get; set; }
 
         // NAVIGATIONS
-        public virtual ICollection<BankReading> BankReadings { get; set; } = null!;
+        public virtual Adminstrator Admin { get; set; } = null!;
+
+        public virtual ICollection<Balance> Balances { get; set; } = null!;
     }
 }

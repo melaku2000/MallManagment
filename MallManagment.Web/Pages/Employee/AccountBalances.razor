@@ -1,0 +1,101 @@
+﻿@page "/employee/balances"
+@using System.Security.Claims
+@inject IBalanceViewModel bankViewModel
+
+<PageTitle>Admin/Account balance</PageTitle>
+<MudGrid>
+    <MudItem md="6">
+        <MudDatePicker DateChanged="OnDateChanged" DateFormat="dd.MM.yyyy" Label="Select date"></MudDatePicker>
+    </MudItem>
+</MudGrid>
+<MudGrid>
+    <MudItem md="6">
+       <MudCard Elevation="10">
+           <MudCardHeader>
+               <CardHeaderContent>Account balances</CardHeaderContent>
+           </MudCardHeader>
+           <MudCardContent>
+                <MudTable Items="bankViewModel.Balances" Dense Hover="true" @bind-education="bankViewModel.BalanceDto">
+
+                    <HeaderContent>
+                        <MudTh>Date</MudTh>
+                        <MudTh>Bank Name</MudTh>
+                        <MudTh>Employee </MudTh>
+                        <MudTh>Account balance</MudTh>
+                        <MudTh>Note</MudTh>
+                        <MudTh>Actions</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="CreatedDate">@context.CreatedDate.ToShortDateString()</MudTd>
+                        <MudTd DataLabel="BankName">@context.BankName</MudTd>
+                        <MudTd DataLabel="FullName">@context.FullName</MudTd>
+                        <MudTd DataLabel="AccountBalance">@context.AccountBalance</MudTd>
+                        <MudTd DataLabel="ContactMobilePerson">@context.Note</MudTd>
+                        <MudTd>
+                            <MudButtonGroup>
+                                <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                                               @onclick="(e => bankViewModel.UpdateAsync(context))" />
+                                <MudIconButton Color="Color.Warning" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                                               @onclick="(e => bankViewModel.DeleteAsync(context))" />
+                            </MudButtonGroup>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+           </MudCardContent>
+       </MudCard>
+    </MudItem>
+
+    <MudItem md="6">
+       <MudCard Elevation="10">
+           <MudCardHeader>
+               <CardHeaderContent>
+                   Banks
+               </CardHeaderContent>
+           </MudCardHeader>
+           <MudCardContent>
+                <MudTable Items="bankViewModel.Banks" Dense Hover="true" @bind-education="bankViewModel.BankDto">
+
+                    <HeaderContent>
+                        <MudTh>Name</MudTh>
+                        <MudTh>Office phone</MudTh>
+                        <MudTh>Contact person</MudTh>
+                        <MudTh>Mobile number</MudTh>
+                        <MudTh>Email</MudTh>
+                        <MudTh>Actions</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="BankName">@context.BankName</MudTd>
+                        <MudTd DataLabel="OfficePhone">@context.OfficePhone</MudTd>
+                        <MudTd DataLabel="ContactPerson">@context.ContactPerson</MudTd>
+                        <MudTd DataLabel="ContactMobilePerson">@context.ContactMobilePerson</MudTd>
+                        <MudTd DataLabel="Email">@context.Email</MudTd>
+                        <MudTh>
+                            <MudFab Color="Color.Tertiary" Disabled="@(bankViewModel.Balances.Any(a=>a.BankId==context.Id))" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" Class="ma-2"
+                                    @onclick="(e => bankViewModel.CreateAsync(context))" />
+                        </MudTh>
+                    </RowTemplate>
+                </MudTable>
+           </MudCardContent>
+       </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await _authStateProvider.GetAuthenticationStateAsync();
+        var user = auth.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            var claim = user.FindFirst(a => a.Type == ClaimTypes.NameIdentifier);
+            bankViewModel.EmployeeId = claim?.Value;
+        }
+        await bankViewModel.LoadAsync();
+        await bankViewModel.LoadBalanceAsync();
+    }
+    protected async Task OnDateChanged(DateTime? dateTime){
+        bankViewModel.CurrentDate = dateTime;
+        await bankViewModel.LoadBalanceAsync();
+        StateHasChanged();
+    }
+}

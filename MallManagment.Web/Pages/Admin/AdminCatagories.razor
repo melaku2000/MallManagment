@@ -1,0 +1,33 @@
+﻿@page "/admin/catagories"
+@inject ICatagoryViewModel catagoryViewModel
+
+<PageTitle>Admin/Catagories</PageTitle>
+<h3>Catagories</h3>
+<MudTable Items="catagoryViewModel.Catagories" Dense Hover="true" @bind-education="catagoryViewModel.CatagoryDto">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Created date</MudTh>
+        <MudTh>Modify date</MudTh>
+        <MudTh>
+            <MudFab Color="Color.Tertiary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" Class="ma-2"
+                    @onclick="(e => catagoryViewModel.CreateAsync())" />
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="CatagoryName">@context.CatagoryName</MudTd>
+        <MudTd DataLabel="CreatedDate">@context.CreatedDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="ModifyDate">@context.ModifyDate.ToShortDateString()</MudTd>
+        <MudTd>
+            <MudButtonGroup>
+                <MudIconButton Color="Color.Tertiary" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                               @onclick="(e => catagoryViewModel.UpdateAsync(context))" />
+                <MudIconButton Color="Color.Warning" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                               @onclick="(e => catagoryViewModel.DeleteAsync(context))" />
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+@code {
+    protected override async Task OnInitializedAsync() => await catagoryViewModel.LoadAsync();
+
+}

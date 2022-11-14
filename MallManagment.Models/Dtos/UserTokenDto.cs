@@ -15,7 +15,7 @@ namespace MallManagment.Models.Dtos
             return new UserTokenDto
             {
                 Id = model.Id,
-                EmployeeId = model.EmployeeId,
+                AdminId = model.AdminId,
                 Token = model.Token,
                 TokenType = model.TokenType,
                 CreatedDate = model.CreatedDate,
@@ -28,7 +28,7 @@ namespace MallManagment.Models.Dtos
             return new UserToken
             {
                 Id = model.Id,
-                EmployeeId = model.EmployeeId,
+                AdminId = model.AdminId,
                 Token = model.Token,
                 TokenType = model.TokenType,
                 CreatedDate = model.CreatedDate,
@@ -36,7 +36,7 @@ namespace MallManagment.Models.Dtos
                 TokenExpireTime = model.TokenExpireTime
             };
         }
-        public string? EmployeeId { get; set; }
+        public string? AdminId { get; set; }
         public string? Token { get; set; }
         public TokenType TokenType { get; set; }
         public DateTime TokenExpireTime { get; set; }

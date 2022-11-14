@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Api", "MallManagment.Api\MallManagment.Api.csproj", "{CF23AB9A-AE40-40C2-A5E8-3690B0DBCCF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Api", "MallManagment.Api\MallManagment.Api.csproj", "{CF23AB9A-AE40-40C2-A5E8-3690B0DBCCF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Models", "MallManagment.Models\MallManagment.Models.csproj", "{1463FBE0-6B0A-405A-85CC-BEABDCF593B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Models", "MallManagment.Models\MallManagment.Models.csproj", "{1463FBE0-6B0A-405A-85CC-BEABDCF593B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MallManagment.Web", "MallManagment.Web\MallManagment.Web.csproj", "{1549C363-7097-448A-B17B-C0D5646788BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MallManagment.Web", "MallManagment.Web\MallManagment.Web.csproj", "{1549C363-7097-448A-B17B-C0D5646788BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

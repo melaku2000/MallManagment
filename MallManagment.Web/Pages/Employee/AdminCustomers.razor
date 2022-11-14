@@ -1,0 +1,46 @@
+﻿@page "/customers"
+@inject ICustomerViewModel customerViewModel
+
+
+<PageTitle>Admin/Customers</PageTitle>
+<h3>Customers</h3>
+
+<MudTable Items="customerViewModel.Customers" Hover="true" @bind-education="customerViewModel.customerDto">
+    <HeaderContent>
+        <MudTh>Catagory</MudTh>
+        <MudTh>Company Name</MudTh>
+        <MudTh>Company Phone </MudTh>
+        <MudTh>Contact person</MudTh>
+        <MudTh>Mobile phone</MudTh>
+        <MudTh>Company Tin</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>
+            <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium"
+                       OnClick="customerViewModel.CreateAsync">Add</MudButton>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="CatagoryName">@context.CatagoryName</MudTd>
+        <MudTd DataLabel="CompanyName">@context.CompanyName</MudTd>
+        <MudTd DataLabel="OfficePhone">@context.OfficePhone</MudTd>
+        <MudTd DataLabel="FullName">@context.FullName</MudTd>
+        <MudTd DataLabel="MobilePhone">@context.MobilePhone</MudTd>
+
+        <MudTd DataLabel="CompanyTin">@context.CompanyTin</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd>
+            <MudButtonGroup Variant="Variant.Filled" OverrideStyles="false">
+                <MudButton Color="Color.Tertiary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Medium" Class="ma-2"
+                           OnClick="(()=>customerViewModel.UpdateAsync(context))">Edit</MudButton>
+                <MudButton Color="Color.Success" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Details" Size="Size.Medium" Class="ma-2"
+                           Href="@($"/admin/employee/detail/{context.Id}")">Detail</MudButton>
+                <MudButton Color="Color.Warning" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="ma-2"
+                           @onclick="(e => customerViewModel.DeleteAsync(context))">Delete</MudButton>
+            </MudButtonGroup>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    protected override async Task OnInitializedAsync() => await customerViewModel.LoadAsync();
+}

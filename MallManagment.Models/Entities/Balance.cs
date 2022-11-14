@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MallManagment.Models.Entities
 {
-    public class BankReading:BaseModel
+    public class Balance:BaseModel
     {
         [ForeignKey(nameof(Employee))]
         public string? EmployeeId { get; set; }
@@ -17,7 +17,7 @@ namespace MallManagment.Models.Entities
         public string? BankId { get; set; }
 
         [Required(ErrorMessage = "Current account reading is required")]
-        public decimal CurrentReading { get; set; }
+        public decimal AccountBalance { get; set; }
         
         [StringLength(50)]
         public string? Note { get; set; }

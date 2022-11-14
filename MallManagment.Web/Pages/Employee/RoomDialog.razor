@@ -1,0 +1,38 @@
+﻿<EditForm Model="room" OnValidSubmit="Submit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary />
+    <MudDialog Style="width:500px">
+        <DialogContent>
+            <MudTextField T="string" Variant="Variant.Outlined" For="@(()=>room.Floor)" Label="Floor" @bind-Value="room.Floor" />
+            <MudTextField T="int" Variant="Variant.Outlined" For="@(()=>room.RoomNumber)" Label="Room number" @bind-Value="room.RoomNumber" />
+            <MudTextField T="float" Variant="Variant.Outlined" For="@(()=>room.Area)" Label="Area in square meter" @bind-Value="room.Area" />
+            <MudTextField T="float" Variant="Variant.Outlined" For="@(()=>room.Amount)" Label="Price per square meter" @bind-Value="room.Amount" />
+            <MudSelect Variant="Variant.Outlined" Strict @bind-Value="room.Status" Label="Status" For="@(()=>room.Status)">
+                @foreach (RoomStatus status in Enum.GetValues(typeof(RoomStatus)))
+                {
+                    <MudSelectItem Value=@status>@status.GetStringValue()</MudSelectItem>
+                }
+            </MudSelect>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public RoomDto room { get; set; } = new RoomDto();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok<RoomDto>(room));
+    }
+}

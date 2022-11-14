@@ -68,10 +68,10 @@ namespace MallManagment.Models.Dtos
     {
         public static implicit operator ConfirmPasswordDto(UserToken userToken)
         {
-            return new ConfirmPasswordDto { EmployeeId = userToken.EmployeeId, Token = userToken.Token };
+            return new ConfirmPasswordDto { AdminId = userToken.AdminId, Token = userToken.Token };
         }
         [Required]
-        public string? EmployeeId { get; set; }
+        public string? AdminId { get; set; }
         [Required(ErrorMessage = "Token is required.")]
         public string? Token { get; set; }
 

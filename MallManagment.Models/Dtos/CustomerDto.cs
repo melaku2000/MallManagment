@@ -38,6 +38,26 @@ namespace MallManagment.Models.Dtos
             if (model.Catagory != null) dto.CatagoryName = model.Catagory.CatagoryName;
             return dto;
         }
+        public static implicit operator Customer(CustomerDto model)
+        {
+            return new Customer
+            {
+                Id = model.Id,
+                Email = model.Email,
+                FullName = model.FullName,
+                MobilePhone = model.MobilePhone,
+
+                CatagoryId = model.CatagoryId,
+                CompanyName = model.CompanyName,
+                CompanyTin = model.CompanyTin,
+                OfficePhone = model.OfficePhone,
+
+                CompanyUrl = model.CompanyUrl,
+                CreatedDate = model.CreatedDate,
+                ModifyDate = model.ModifyDate,
+            };
+        }
+        
         [StringLength(50)]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]

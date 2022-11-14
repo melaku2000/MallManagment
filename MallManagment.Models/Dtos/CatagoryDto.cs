@@ -17,7 +17,17 @@ namespace MallManagment.Models.Dtos
             return new CatagoryDto
             {
                 Id = model.Id,
-                CatagoryName= model.CatagoryName,
+                CatagoryName = model.CatagoryName,
+                CreatedDate = model.CreatedDate,
+                ModifyDate = model.ModifyDate,
+            };
+        }
+        public static implicit operator BusinessCatagory(CatagoryDto model)
+        {
+            return new BusinessCatagory
+            {
+                Id = model.Id,
+                CatagoryName = model.CatagoryName,
                 CreatedDate = model.CreatedDate,
                 ModifyDate = model.ModifyDate,
             };
